@@ -21,11 +21,11 @@ class Veichle:
         self.pos = pos
         self.xSize = xSize
         self.ySize = ySize
-        self.angle = math.pi/2
+        self.angle = 0
         self.motor1 = motor1
         self.motor2 = motor2
         self.sensors = []
 
     def draw(self, img):
-        print(self.pos)
-        cv2.rectangle(img, tuple(self.pos), (self.pos[0]+self.xSize, self.pos[1]+self.ySize), (255, 255, 255))
+        cv2.rectangle(img, (round(self.pos[0]), round(self.pos[1])),
+        (round(self.pos[0]+self.xSize), round(self.pos[1]+self.ySize)), (255, 255, 255))
