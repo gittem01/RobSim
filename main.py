@@ -14,7 +14,10 @@ while 1:
     key = cv2.waitKey(1)
     if key == ord("q"):
         break
+    if key == ord("d"):
+        v.angle += 0.1
 
-    motorx.move(0.5)
+    v.tirePos(img)
+    #motorx.move(0.5)
     v.draw(img)
     cv2.imshow("Sim", img)
