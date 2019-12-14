@@ -31,6 +31,7 @@ class Veichle:
                  round(self.pos[1]+self.ySize*math.sin(self.angle)*tireMult))
         tire2 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult+self.xSize*math.sin(self.angle)),
                  round(self.pos[1]+self.ySize*math.sin(self.angle)*tireMult+self.xSize*math.cos(self.angle)))
+
         if img is not None:
             cv2.circle(img, tire1, 10, (255, 255, 255))
             cv2.circle(img, tire2, 10, (255, 255, 255))
