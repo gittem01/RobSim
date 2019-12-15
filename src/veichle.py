@@ -26,33 +26,30 @@ class Veichle:
         self.motor2 = motor2
         self.sensors = []
 
-    def tirePos(self, img=None, tireMult=0.75):
+    def tirePos(self, tireMult=0.75):
         tire1 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult),
                  round(self.pos[1]+self.ySize*math.sin(self.angle)*tireMult))
         tire2 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult+self.xSize*math.sin(self.angle)),
                  round(self.pos[1]+self.ySize*math.sin(self.angle)*tireMult+self.xSize*math.cos(self.angle)))
 
-        if img is not None:
-            cv2.circle(img, tire1, 10, (255, 255, 255))
-            cv2.circle(img, tire2, 10, (255, 255, 255))
         return (tire1, tire2)
 
     def draw(self, img):
         cv2.line(img, (round(self.pos[0]), round(self.pos[1])),
                       (round(self.pos[0]+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle)))
-                       ,(255, 0, 0))
+                       ,1)
         cv2.line(img, (round(self.pos[0]), round(self.pos[1])),
                       (round(self.pos[0]-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle)))
-                       ,(255, 0, 0))
+                       ,1)
         cv2.line(img, (round(self.pos[0]+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle))),
                       (round(self.pos[0]+self.xSize*math.sin(self.angle)-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle)+self.ySize*math.sin(self.angle)))
-                       ,(255, 0, 0))
+                       ,1)
         cv2.line(img, (round(self.pos[0]-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle))),
                       (round(self.pos[0]-self.ySize*math.cos(self.angle)+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle)+self.xSize*math.cos(self.angle)))
-                       ,(255, 0, 0))
+                       ,1)

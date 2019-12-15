@@ -1,9 +1,8 @@
 import math
-from .veichle import rotateArround
+from .veichle import *
 
 class Motor:
-    def __init__(self, num, dist=0):
-        self.dist = dist # Dist from top part of the robot
+    def __init__(self, num):
         self.connection = None
         self.num = num
         self.dict = {1: 2, 2: 1}
@@ -12,7 +11,6 @@ class Motor:
 
     def move(self):
         #Just move and make rotation things
-        #otherMotor = eval(f"self.connection.motor{self.dict[self.num]}")
 
         otherMotor = self.connection.tirePos()[self.dict[self.num]-1]
         if self.num == 1:
@@ -23,5 +21,7 @@ class Motor:
             self.connection.angle += self.speed
     def set(self, speed):
         self.speed = speed
-    def draw(self):
-        pass # Will draw only this motor
+    def draw(self, img, v=None):
+        tire1, tire2 = v.tirePos(self.posMult)
+        cv2.circle(img, tire1, 10, 1)
+        cv2.circle(img, tire2, 10, 1)
