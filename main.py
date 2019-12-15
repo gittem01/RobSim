@@ -4,14 +4,16 @@ from src.sensor import *
 import random
 import time
 
-baseImg = np.zeros((600, 1000))
-baseImg[100:150, 100:150] = 1
+#baseImg = np.zeros((600, 1000))
+#baseImg[100:150, 100:150] = 1
+
+baseImg = cv2.imread("untitled.png", 0)/255; 
+baseImg.dtype = np.float64
 
 v = Veichle([300, 150], 50, 80)
 
 v.sensors = [sensor(v, i, 2) for i in range(1, 9)]
 
-#sensor1 = sensor(v, 1, 3)
 motora = Motor(1)
 v.motor1 = motora
 v.motor1.connection=v
@@ -33,11 +35,11 @@ while 1:
     if key == ord("q"):
         break
     if key == ord("d"):
-        v.motor2.speed -= 0.002
         v.motor1.speed += 0.002
+        v.motor2.speed -= 0.002
     if key == ord("a"):
-        v.motor2.speed += 0.002
         v.motor1.speed -= 0.002
+        v.motor2.speed += 0.002
     if key == ord("w"):
         v.motor1.speed += 0.001
         v.motor2.speed += 0.001
