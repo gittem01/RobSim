@@ -9,7 +9,7 @@ import time
 
 mults = [-4, -3, -2, -1, 1, 2, 3, 4]
 
-baseImg = cv2.imread("untitled1.png", 0)/255; 
+baseImg = cv2.imread("untitled.png", 0)/255; 
 baseImg.dtype = np.float64
 
 v = Veichle([300, 150], 50, 80)
