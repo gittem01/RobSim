@@ -4,9 +4,6 @@ from src.sensor import *
 import random
 import time
 
-#baseImg = np.zeros((600, 1000))
-#baseImg[100:150, 100:150] = 1
-
 mults = [-4, -3, -2, -1, 1, 2, 3, 4]
 
 baseImg = cv2.imread("untitled.png", 0)/255; 
@@ -26,13 +23,9 @@ v.motor2.connection=v
 v.motor1.set(0)
 v.motor2.set(0)
 
-#t = time.time()
-#frame = 0
 startTracing = False
 while 1:
  
-    #frame += 1
-    #print(1/((time.time()-t)/frame))
     img = baseImg.copy()
     key = cv2.waitKey(1)
     sensorValues = []
@@ -45,8 +38,8 @@ while 1:
             sum += mults[i] * sensorValues[i]
         v.motor1.set(sum/400)
         v.motor2.set(-sum/400)
-        v.motor1.speed += 0.03
-        v.motor2.speed += 0.03
+        v.motor1.speed += 0.01
+        v.motor2.speed += 0.01
     if key == ord("q"):
         break
     if key == ord("d"):
@@ -63,6 +56,8 @@ while 1:
         v.motor2.speed -= 0.001
     if key == ord("z"):
         startTracing = not startTracing
+        v.motor1.set(0)
+        v.motor2.set(0)
     v.motor1.move()
     v.motor2.move()
     
