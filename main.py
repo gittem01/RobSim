@@ -7,7 +7,9 @@ import time
 #baseImg = np.zeros((600, 1000))
 #baseImg[100:150, 100:150] = 1
 
-baseImg = cv2.imread("untitled.png", 0)/255; 
+mults = [-4, -3, -2, -1, 1, 2, 3, 4]
+
+baseImg = cv2.imread("untitled1.png", 0)/255; 
 baseImg.dtype = np.float64
 
 v = Veichle([300, 150], 50, 80)
@@ -26,12 +28,25 @@ v.motor2.set(0)
 
 #t = time.time()
 #frame = 0
+startTracing = False
 while 1:
+ 
     #frame += 1
     #print(1/((time.time()-t)/frame))
     img = baseImg.copy()
     key = cv2.waitKey(1)
-
+    sensorValues = []
+    for sensor in v.sensors:
+        sensorValues.append(sensor.value(img))
+    #print(str(sensorValues), end = "\r")
+    if startTracing:
+        sum = 0
+        for i in range(len(mults)):
+            sum += mults[i] * sensorValues[i]
+        v.motor1.set(sum/400)
+        v.motor2.set(-sum/400)
+        v.motor1.speed += 0.03
+        v.motor2.speed += 0.03
     if key == ord("q"):
         break
     if key == ord("d"):
@@ -46,12 +61,11 @@ while 1:
     if key == ord("s"):
         v.motor1.speed -= 0.001
         v.motor2.speed -= 0.001
-
+    if key == ord("z"):
+        startTracing = not startTracing
     v.motor1.move()
     v.motor2.move()
-    for sensor in v.sensors:
-        print(sensor.value(img), end=" ")
-    print("", end = "\r")
+    
     for sensor in v.sensors: # For loops seperated because sensors were interfiering each other at high speeds
         sensor.draw(img)
     v.motor1.draw(img, v)
