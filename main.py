@@ -4,10 +4,13 @@ from src.sensor import *
 import random
 
 baseImg = np.zeros((600, 1000))
-baseImg[100:150, 100:150] = 1
+baseImg[100:150, 100:150] = 2
 
 v = Veichle([300, 150], 50, 100)
-sensor1 = sensor(v, 1, 5)
+
+v.sensors = [sensor(v, i, 3) for i in range(1, 9)]
+
+#sensor1 = sensor(v, 1, 3)
 motora = Motor(1)
 v.motor1 = motora
 v.motor1.connection=v
@@ -41,8 +44,10 @@ while 1:
     v.motor1.move()
     v.motor2.move()
 
-    print(sensor1.value(img))
-    sensor1.draw(img)
+    for sensor in v.sensors:
+        print(sensor.value(img), end=" ")
+        sensor.draw(img)
+    print()
     v.motor1.draw(img, v)
     v.motor2.draw(img, v)
     v.draw(img)
