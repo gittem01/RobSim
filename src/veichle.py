@@ -14,6 +14,7 @@ def rotateArround(p1, p2, angle):
 
     p2[0] = xnew + p1[0]
     p2[1] = ynew + p1[1]
+    return p2
 
 class Veichle:
     def __init__(self, pos, xSize, ySize, motor1=None, motor2=None):
@@ -25,8 +26,7 @@ class Veichle:
         self.motor2 = motor2
         self.sensors = []
 
-    def tirePos(self, img=None):
-        tireMult = 0.75
+    def tirePos(self, img=None, tireMult=0.75):
         tire1 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult),
                  round(self.pos[1]+self.ySize*math.sin(self.angle)*tireMult))
         tire2 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult+self.xSize*math.sin(self.angle)),
