@@ -20,8 +20,13 @@ class Motor:
             rotateArround(otherMotor, self.connection.pos, -self.speed)
             self.connection.angle += self.speed
     def set(self, speed):
+        maxSpeed = 0.001
+        if self.speed > maxSpeed:
+            self.speed = maxSpeed
+        if self.speed < -maxSpeed:
+            self.speed = -maxSpeed
         self.speed = speed
     def draw(self, img, v=None):
         tire1, tire2 = v.tirePos(self.posMult)
-        cv2.circle(img, tire1, 10, 1)
+        cv2.circle(img, tire1, 10, 1) # (imageToDraw, locationOfCircle, radiusOfCircle, ThicknessOfCircle)
         cv2.circle(img, tire2, 10, 1)
