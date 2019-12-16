@@ -1,13 +1,14 @@
 import math
 import numpy as np
 
-class sensor:
+class bwsensor:
     def __init__(self, connection, num, size=1):
         self.size = size
         self.connection = connection
         self.num = num
         self.pos = self.connection.pos
-        self.topMargin = 0.075
+        self.yMargin = 0.075
+        self.xMargin = 0.11
     def value(self, img):
         vision = img[round(self.pos[1]-self.size): round(self.pos[1]+self.size),
                      round(self.pos[0]-self.size): round(self.pos[0]+self.size)]
@@ -20,9 +21,9 @@ class sensor:
 
     def draw(self, img):
         cp = self.connection.pos
-        self.pos = (round(cp[0]+self.connection.xSize*math.sin(self.connection.angle)*(self.num*0.11)
-                    -self.connection.ySize*math.cos(self.connection.angle)*self.topMargin),
-                    round(cp[1]+self.connection.xSize*math.cos(self.connection.angle)*(self.num*0.11)
-                    +self.connection.ySize*math.sin(self.connection.angle)*self.topMargin))
+        self.pos = (round(cp[0]+self.connection.xSize*math.sin(self.connection.angle)*(self.num*self.xMargin)
+                    -self.connection.ySize*math.cos(self.connection.angle)*self.yMargin),
+                    round(cp[1]+self.connection.xSize*math.cos(self.connection.angle)*(self.num*self.xMargin)
+                    +self.connection.ySize*math.sin(self.connection.angle)*self.yMargin))
         img[round(self.pos[1]-self.size): round(self.pos[1]+self.size),
-            round(self.pos[0]-self.size): round(self.pos[0]+self.size)] = (255, 255, 255)
+            round(self.pos[0]-self.size): round(self.pos[0]+self.size)] = (0, 0, 255)

@@ -1,12 +1,13 @@
 from src.motor import *
 from src.veichle import *
-from src.sensor import *
+from src.bwSensor import *
 from src.keyControls import control
 import random
 import time
 
 windowName = "Sim"
 mults = [-4, -3, -2, -1, 1, 2, 3, 4]
+
 WIDTH = 800
 HEIGHT = 500
 
@@ -14,8 +15,8 @@ baseSpeed = 0.005
 
 baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint8)
 
-v = Veichle([300, 150], 50, 80)
-sensors = [sensor(v, i, 1) for i in range(1, 9)]
+v = Veichle([300, 150], 75, 120)
+sensors = [bwsensor(v, i, 1) for i in range(1, 9)]
 
 motora = Motor(1)
 v.motor1 = motora
@@ -34,7 +35,7 @@ def event_func(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         lineList.append((x, y))
         if len(lineList) == 2:
-            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 5)
+            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 2)
             lineList = [lineList[1]]
 
 cv2.namedWindow(windowName)
