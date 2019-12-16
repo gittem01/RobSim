@@ -6,8 +6,12 @@ import time
 
 windowName = "Sim"
 mults = [-4, -3, -2, -1, 1, 2, 3, 4]
+WIDTH = 800
+HEIGHT = 500
 
-baseImg = np.zeros((400, 800), np.float64)
+steering = 0.5
+
+baseImg = np.zeros((HEIGHT, WIDTH), np.float64)
 
 v = Veichle([300, 150], 50, 80)
 v.sensors = [sensor(v, i, 1) for i in range(1, 9)]
@@ -46,8 +50,8 @@ while 1:
         sum = 0
         for i in range(len(mults)):
             sum += mults[i] * sensorValues[i]
-        v.motor1.set(sum/400)
-        v.motor2.set(-sum/400)
+        v.motor1.set(sum/(500)*steering)
+        v.motor2.set(-sum/(500)*steering)
         v.motor1.speed += 0.01
         v.motor2.speed += 0.01
 
@@ -69,6 +73,9 @@ while 1:
         startTracing = not startTracing
         v.motor1.set(0)
         v.motor2.set(0)
+    if key == ord("c"):
+        baseImg = np.zeros((HEIGHT, WIDTH), np.float64)# Clears screen
+        lineList = []
 
     v.motor1.move()
     v.motor2.move()
