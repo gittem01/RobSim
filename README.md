@@ -11,3 +11,4 @@
  - 'd' Moves right
  - 's' Moves backward
  - 'z' Starts or stops line tracing
+ - Just click for drawing lines
