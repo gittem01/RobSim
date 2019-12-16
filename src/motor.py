@@ -27,5 +27,5 @@ class Motor:
             self.speed = speed
     def draw(self, img, v=None):
         tire1, tire2 = v.tirePos(self.posMult)
-        cv2.circle(img, tire1, 10, 1) # (imageToDraw, locationOfCircle, radiusOfCircle, ThicknessOfCircle)
-        cv2.circle(img, tire2, 10, 1)
+        cv2.circle(img, tire1, 10, (255, 255, 255)) # (imageToDraw, locationOfCircle, radiusOfCircle, ThicknessOfCircle)
+        cv2.circle(img, tire2, 10, (255, 255, 255))

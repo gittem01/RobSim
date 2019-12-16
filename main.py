@@ -12,7 +12,7 @@ HEIGHT = 500
 
 baseSpeed = 0.005
 
-baseImg = np.zeros((HEIGHT, WIDTH), np.float64)
+baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint8)
 
 v = Veichle([300, 150], 50, 80)
 sensors = [sensor(v, i, 1) for i in range(1, 9)]
@@ -34,7 +34,7 @@ def event_func(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         lineList.append((x, y))
         if len(lineList) == 2:
-            cv2.line(baseImg, lineList[0], lineList[1], 1, 5)
+            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 5)
             lineList = [lineList[1]]
 
 cv2.namedWindow(windowName)
@@ -64,7 +64,7 @@ while 1:
         v.motor1.set(0)
         v.motor2.set(0)
     if key == ord("c"):
-        baseImg = np.zeros((HEIGHT, WIDTH), np.float64)# Clears screen
+        baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint8)# Clears screen
         lineList = []
 
     v.motor1.move()

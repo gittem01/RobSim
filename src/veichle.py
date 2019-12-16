@@ -37,18 +37,18 @@ class Veichle:
         cv2.line(img, (round(self.pos[0]), round(self.pos[1])),
                       (round(self.pos[0]+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle)))
-                       ,1)
+                       ,(255, 255, 255))
         cv2.line(img, (round(self.pos[0]), round(self.pos[1])),
                       (round(self.pos[0]-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle)))
-                       ,1)
+                       ,(255, 255, 255))
         cv2.line(img, (round(self.pos[0]+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle))),
                       (round(self.pos[0]+self.xSize*math.sin(self.angle)-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.xSize*math.cos(self.angle)+self.ySize*math.sin(self.angle)))
-                       ,1)
+                       ,(255, 255, 255))
         cv2.line(img, (round(self.pos[0]-self.ySize*math.cos(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle))),
                       (round(self.pos[0]-self.ySize*math.cos(self.angle)+self.xSize*math.sin(self.angle)),
                        round(self.pos[1]+self.ySize*math.sin(self.angle)+self.xSize*math.cos(self.angle)))
-                       ,1)
+                       ,(255, 255, 255))
