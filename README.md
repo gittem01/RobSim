@@ -11,4 +11,5 @@
  - 'd' Moves right
  - 's' Moves backward
  - 'z' Starts or stops line tracing
+ - 'c' Clears screen
  - Just click for drawing lines
