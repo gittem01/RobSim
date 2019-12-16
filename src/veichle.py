@@ -24,7 +24,6 @@ class Veichle:
         self.angle = 0
         self.motor1 = motor1
         self.motor2 = motor2
-        self.sensors = []
 
     def tirePos(self, tireMult=0.75):
         tire1 = (round(self.pos[0]-self.ySize*math.cos(self.angle)*tireMult),
