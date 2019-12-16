@@ -1,6 +1,7 @@
 from src.motor import *
 from src.veichle import *
 from src.bwSensor import *
+from src.distSensor import *
 from src.keyControls import control
 import random
 import time
@@ -28,6 +29,8 @@ v.motor2.connection=v
 
 v.motor1.set(0)
 v.motor2.set(0)
+
+d = distSensor(v)
 
 lineList = []
 def event_func(event, x, y, flags, param):
@@ -76,5 +79,5 @@ while 1:
     v.motor1.draw(img, v)
     v.motor2.draw(img, v)
     v.draw(img)
-
+    d.draw(img)
     cv2.imshow(windowName, img)
