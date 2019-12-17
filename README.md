@@ -12,4 +12,5 @@
  - 's' Moves backward
  - 'z' Starts or stops line tracing
  - 'c' Clears screen
- - Just click for drawing lines
+ - Left click for drawing lines
+ - Middle click for drawing walls
