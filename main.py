@@ -52,7 +52,7 @@ while 1:
     for sensor in sensors:
         sensorValues.append(sensor.value(img))
     #print(str(sensorValues), end = "\r") # Sensor values can be seen for debuging
-
+    d.value(img)
     if startTracing:
         sum = 0
         for i in range(len(mults)):
