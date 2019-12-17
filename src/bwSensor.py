@@ -12,9 +12,9 @@ class bwsensor:
     def value(self, img):
         vision = img[round(self.pos[1]-self.size): round(self.pos[1]+self.size),
                      round(self.pos[0]-self.size): round(self.pos[0]+self.size)]
-
-        sum = np.count_nonzero(vision==(255, 255, 255))
-        if sum >= (self.size**2)*2:
+        sum = np.count_nonzero(vision==(255, 255, 255), axis=2)
+        sum = np.count_nonzero(sum==3)
+        if sum >= ((self.size*2)**2)/2:
             return 1
         else:
             return 0

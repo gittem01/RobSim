@@ -16,11 +16,11 @@ class distSensor:
         for i in range(1, self.maxDist+1):
             pos = (round(self.pos[0]+i*math.cos(totalAngle)),
                    round(self.pos[1]-i*math.sin(totalAngle)))
-            if list(img[pos[1], pos[0]]) == [255, 255, 255]:
+            if list(img[pos[1], pos[0]]) == [255, 0, 0]:
                 break
         self.dist = i
         return i
-        
+
     def draw(self, img):
         cp = self.connection.pos
         totalAngle = self.angle + self.connection.angle

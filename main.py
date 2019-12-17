@@ -17,7 +17,7 @@ baseSpeed = 0.005
 baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint8)
 
 v = Veichle([300, 150], 75, 120)
-sensors = [bwsensor(v, i, 1) for i in range(1, 9)]
+sensors = [bwsensor(v, i, 2) for i in range(1, 9)]
 
 motora = Motor(1)
 v.motor1 = motora
@@ -30,16 +30,23 @@ v.motor2.connection=v
 v.motor1.set(0)
 v.motor2.set(0)
 
-d = distSensor(v)
+dSensor = distSensor(v)
 
 lineList = []
+wallList = []
 def event_func(event, x, y, flags, param):
     global lineList
+    global wallList
     if event == cv2.EVENT_LBUTTONDOWN:
         lineList.append((x, y))
         if len(lineList) == 2:
-            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 2)
+            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 10)
             lineList = [lineList[1]]
+    elif event == cv2.EVENT_MBUTTONDOWN:
+        wallList.append((x, y))
+        if len(wallList) == 2:
+            cv2.line(baseImg, wallList[0], wallList[1], (255, 0, 0), 10)
+            wallList = [wallList[1]]
 
 cv2.namedWindow(windowName)
 cv2.setMouseCallback(windowName, event_func)
@@ -51,8 +58,8 @@ while 1:
     sensorValues = []
     for sensor in sensors:
         sensorValues.append(sensor.value(img))
-    #print(str(sensorValues), end = "\r") # Sensor values can be seen for debuging
-    d.value(img)
+
+    distance1 = dSensor.value(img)
     if startTracing:
         sum = 0
         for i in range(len(mults)):
@@ -79,5 +86,5 @@ while 1:
     v.motor1.draw(img, v)
     v.motor2.draw(img, v)
     v.draw(img)
-    d.draw(img)
+    dSensor.draw(img)
     cv2.imshow(windowName, img)
