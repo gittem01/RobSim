@@ -3,6 +3,7 @@ from src.veichle import *
 from src.bwSensor import *
 from src.distSensor import *
 from src.candle import *
+from src.heatSensor import *
 from src.keyControls import control
 import random
 import time
@@ -33,6 +34,9 @@ v.motor1.set(0)
 v.motor2.set(0)
 
 dSensor = distSensor(v)
+
+hSensor = heatSensor(v, 0.8)
+
 c = Candle((100, 100))
 c.makeGridMap(baseImg, gridList)
 
@@ -62,6 +66,7 @@ startTracing = False
 while 1:
     img = baseImg.copy()
     key = cv2.waitKey(1)
+    print(hSensor.value(img))
     sensorValues = []
     for sensor in sensors:
         sensorValues.append(sensor.value(img))
@@ -84,6 +89,7 @@ while 1:
     if key == ord("c"):
         baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16)# Clears screen
         lineList = []
+        wallList = []
 
     v.motor1.move()
     v.motor2.move()
@@ -94,4 +100,5 @@ while 1:
     v.motor2.draw(img, v)
     v.draw(img)
     dSensor.draw(img)
+    hSensor.draw(img)
     cv2.imshow(windowName, np.array(img, dtype=np.uint8))

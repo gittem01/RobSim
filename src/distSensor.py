@@ -2,7 +2,7 @@ import cv2
 import math
 
 class distSensor:
-    def __init__(self, connection, size=1, angle=-math.pi/2):
+    def __init__(self, connection, angle=-math.pi/2):
         self.connection = connection
         self.pos = self.connection.pos
         self.maxDist = 50
@@ -16,7 +16,9 @@ class distSensor:
         for i in range(1, self.maxDist+1):
             pos = (round(self.pos[0]+i*math.cos(totalAngle)),
                    round(self.pos[1]-i*math.sin(totalAngle)))
-            if list(img[pos[1], pos[0]]) == [255, 0, 0]:
+            if pos[1] >= img.shape[0] or pos[1] < 0 or pos[0] >= img.shape[1] or pos[0] < 0:
+                break
+            if img[pos[1], pos[0], 0] == 255 and img[pos[1], pos[0], 1] + img[pos[1], pos[0], 2] < 100:
                 break
         self.dist = i
         return i
