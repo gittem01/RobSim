@@ -37,19 +37,26 @@ dSensor = distSensor(v)
 
 hSensor = heatSensor(v, 0.8)
 
-c = Candle((100, 100))
-c.makeGridMap(baseImg, gridList)
-
 lineList = []
 wallList = []
+isDrawingLine = False
+
 def event_func(event, x, y, flags, param):
     global lineList
     global wallList
-    if event == cv2.EVENT_LBUTTONDOWN:
+    global isDrawingLine
+    
+    if isDrawingLine:
         lineList.append((x, y))
         if len(lineList) == 2:
             cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 3)
             lineList = [lineList[1]]
+    
+    if event == cv2.EVENT_LBUTTONDOWN:
+        isDrawingLine = True
+    if event == cv2.EVENT_LBUTTONUP:
+        isDrawingLine = False
+        
     elif event == cv2.EVENT_MBUTTONDOWN:
         wallList.append((x, y))
         if len(wallList) == 2:
@@ -66,7 +73,6 @@ startTracing = False
 while 1:
     img = baseImg.copy()
     key = cv2.waitKey(1)
-    print(hSensor.value(img))
     sensorValues = []
     for sensor in sensors:
         sensorValues.append(sensor.value(img))
