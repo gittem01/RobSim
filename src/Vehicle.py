@@ -33,18 +33,13 @@ class Vehicle:
         return (tire1, tire2)
 
     def draw(self, img):
-        cv2.line(img, self.definePos(0, 0),
-                      self.definePos(1, 0)
-                       ,self.color, 2)
-        cv2.line(img, self.definePos(0, 0),
-                      self.definePos(0, 1)
-                       ,self.color, 2)
-        cv2.line(img, self.definePos(1, 0),
-                      self.definePos(1, 1)
-                       ,self.color, 2)
-        cv2.line(img, self.definePos(0, 1),
-                      self.definePos(1, 1)
-                       ,self.color, 2)
+        cv2.line(img, self.definePos(0, 0), self.definePos(1, 0) ,self.color, 2)
+
+        cv2.line(img, self.definePos(0, 0), self.definePos(0, 1) ,self.color, 2)
+
+        cv2.line(img, self.definePos(1, 0), self.definePos(1, 1), self.color, 2)
+
+        cv2.line(img, self.definePos(0, 1), self.definePos(1, 1) ,self.color, 2)
 
     def definePos(self, xMargin, yMargin):
         cp = self.pos

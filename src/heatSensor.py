@@ -2,11 +2,11 @@ import cv2
 import math
 
 class heatSensor:
-    def __init__(self, connection, sensivity=1):
+    def __init__(self, connection, xMargin, yMargin, sensivity=0.9):
         self.connection = connection
         self.pos = self.connection.pos
-        self.xMargin = 0.1
-        self.yMargin = 0.3
+        self.xMargin = xMargin
+        self.yMargin = yMargin
         self.sensivity = sensivity
 
     def value(self, img):

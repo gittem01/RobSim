@@ -2,14 +2,14 @@ import cv2
 import math
 
 class distSensor:
-    def __init__(self, connection, angle=-math.pi/2):
+    def __init__(self, connection, angle, xMargin, yMargin):
         self.connection = connection
         self.pos = self.connection.pos
         self.maxDist = 50
         self.dist = self.maxDist
-        self.angle = angle # That is constant if you want you can use it as a radar :)
-        self.xMargin = 0.9
-        self.yMargin = 0.5
+        self.angle = angle
+        self.xMargin = xMargin
+        self.yMargin = yMargin
 
     def value(self, img):
         totalAngle = self.angle + self.connection.angle

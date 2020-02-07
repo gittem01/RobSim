@@ -5,22 +5,19 @@ from src.distSensor import *
 from src.candle import *
 from src.heatSensor import *
 from src.keyControls import control
+from src.SimWorld import *
 import random
 import time
+import math
 
 windowName = "Sim"
-mults = [-4, -3, -2, -1, 1, 2, 3, 4]
 
 WIDTH = 800
 HEIGHT = 500
 
-baseSpeed = 0.005
-
-baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16)
-gridList = np.moveaxis(np.mgrid[:HEIGHT,:WIDTH], 0, -1)
+s = Sim(windowName, [WIDTH, HEIGHT])
 
 v = Vehicle([300, 150], 75, 120)
-sensors = [bwsensor(v, i, 2) for i in range(1, 9)]
 
 motora = Motor(1, v)
 v.motor1 = motora
@@ -28,78 +25,16 @@ v.motor1 = motora
 motorb = Motor(2, v)
 v.motor2 = motorb
 
-dSensor = distSensor(v)
 
-hSensor = heatSensor(v, 0.8)
+s.objects.append(v)
+s.objects.append(motora)
+s.objects.append(motorb)
 
-lineList = []
-wallList = []
-isDrawingLine = False
 
-def event_func(event, x, y, flags, param):
-    global lineList
-    global wallList
-    global isDrawingLine
-
-    if isDrawingLine:
-        lineList.append((x, y))
-        if len(lineList) == 2:
-            cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 3)
-            lineList = [lineList[1]]
-
-    if event == cv2.EVENT_LBUTTONDOWN:
-        isDrawingLine = True
-    if event == cv2.EVENT_LBUTTONUP:
-        isDrawingLine = False
-
-    elif event == cv2.EVENT_MBUTTONDOWN:
-        wallList.append((x, y))
-        if len(wallList) == 2:
-            cv2.line(baseImg, wallList[0], wallList[1], (255, 0, 0), 3)
-            wallList = [wallList[1]]
-    elif event == cv2.EVENT_RBUTTONDOWN:
-        c = Candle((x, y))
-        c.makeGridMap(baseImg, gridList)
-
-cv2.namedWindow(windowName)
-cv2.setMouseCallback(windowName, event_func)
-
-startTracing = False
 while 1:
-    img = baseImg.copy()
-    key = cv2.waitKey(1)
-    sensorValues = []
-    for sensor in sensors:
-        sensorValues.append(sensor.value(img))
-
-    distance1 = dSensor.value(img)
-    if startTracing:
-        sum = 0
-        for i in range(len(mults)):
-            sum += mults[i] * sensorValues[i]
-        v.motor1.set(sum/(400)+baseSpeed)
-        v.motor2.set(-sum/(400)+baseSpeed)
-
-    control(key, v)
-    if key == ord("q"):
+    out = s.loop()
+    control(out, v)
+    motora.move()
+    motorb.move()
+    if out == ord("q"):
         break
-    if key == ord("z"):
-        startTracing = not startTracing
-        v.motor1.set(0)
-        v.motor2.set(0)
-    if key == ord("c"):
-        baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16) # Clears screen
-        lineList = []
-        wallList = []
-
-    v.motor1.move()
-    v.motor2.move()
-
-    for sensor in sensors: # For loops seperated because sensors were interfiering each other at high speeds
-        sensor.draw(img)
-    v.motor1.draw(img)
-    v.motor2.draw(img)
-    v.draw(img)
-    dSensor.draw(img)
-    hSensor.draw(img)
-    cv2.imshow(windowName, np.array(img, dtype=np.uint8))
