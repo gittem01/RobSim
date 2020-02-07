@@ -10,7 +10,6 @@
  - 'a' Moves left
  - 'd' Moves right
  - 's' Moves backward
- - 'z' Starts or stops line tracing
  - 'c' Clears screen
  - Left click for drawing lines
  - Middle click for drawing walls

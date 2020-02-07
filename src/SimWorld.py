@@ -29,8 +29,10 @@ class Sim:
         for obj in self.objects:
             obj.draw(self.img)
 
-        if key == ord("q"):
-            return key
+        if key == ord("c"):
+            self.baseImg = np.zeros((self.size[1], self.size[0], 3), np.uint16)
+            self.lineDots = []
+            self.wallDots = []
         cv2.imshow(self.name, np.array(self.img, dtype=np.uint8))
         return key
 
