@@ -20,9 +20,6 @@ class heatSensor:
 
     def draw(self, img):
         cp = self.connection.pos
-        self.pos = (round(cp[0]+self.connection.xSize*math.sin(self.connection.angle)*self.xMargin
-                    -self.connection.ySize*math.cos(self.connection.angle)*self.yMargin),
-                    round(cp[1]+self.connection.xSize*math.cos(self.connection.angle)*self.xMargin
-                    +self.connection.ySize*math.sin(self.connection.angle)*self.yMargin))
+        self.pos = self.connection.definePos(self.xMargin, self.yMargin)
         cv2.circle(img, self.pos, 5, (0, 255, 255), 2)
         cv2.circle(img, self.pos, 10, (255, 0, 0), 1)

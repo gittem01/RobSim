@@ -1,5 +1,5 @@
 from src.motor import *
-from src.veichle import *
+from src.Vehicle import *
 from src.bwSensor import *
 from src.distSensor import *
 from src.candle import *
@@ -19,19 +19,14 @@ baseSpeed = 0.005
 baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16)
 gridList = np.moveaxis(np.mgrid[:HEIGHT,:WIDTH], 0, -1)
 
-v = Veichle([300, 150], 75, 120)
+v = Vehicle([300, 150], 75, 120)
 sensors = [bwsensor(v, i, 2) for i in range(1, 9)]
 
-motora = Motor(1)
+motora = Motor(1, v)
 v.motor1 = motora
-v.motor1.connection=v
 
-motorb = Motor(2)
+motorb = Motor(2, v)
 v.motor2 = motorb
-v.motor2.connection=v
-
-v.motor1.set(0)
-v.motor2.set(0)
 
 dSensor = distSensor(v)
 
@@ -45,18 +40,18 @@ def event_func(event, x, y, flags, param):
     global lineList
     global wallList
     global isDrawingLine
-    
+
     if isDrawingLine:
         lineList.append((x, y))
         if len(lineList) == 2:
             cv2.line(baseImg, lineList[0], lineList[1], (255, 255, 255), 3)
             lineList = [lineList[1]]
-    
+
     if event == cv2.EVENT_LBUTTONDOWN:
         isDrawingLine = True
     if event == cv2.EVENT_LBUTTONUP:
         isDrawingLine = False
-        
+
     elif event == cv2.EVENT_MBUTTONDOWN:
         wallList.append((x, y))
         if len(wallList) == 2:
@@ -93,7 +88,7 @@ while 1:
         v.motor1.set(0)
         v.motor2.set(0)
     if key == ord("c"):
-        baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16)# Clears screen
+        baseImg = np.zeros((HEIGHT, WIDTH, 3), np.uint16) # Clears screen
         lineList = []
         wallList = []
 
@@ -102,8 +97,8 @@ while 1:
 
     for sensor in sensors: # For loops seperated because sensors were interfiering each other at high speeds
         sensor.draw(img)
-    v.motor1.draw(img, v)
-    v.motor2.draw(img, v)
+    v.motor1.draw(img)
+    v.motor2.draw(img)
     v.draw(img)
     dSensor.draw(img)
     hSensor.draw(img)

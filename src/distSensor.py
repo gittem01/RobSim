@@ -26,10 +26,7 @@ class distSensor:
     def draw(self, img):
         cp = self.connection.pos
         totalAngle = self.angle + self.connection.angle
-        self.pos = (round(cp[0]+self.connection.xSize*math.sin(self.connection.angle)*self.xMargin
-                    -self.connection.ySize*math.cos(self.connection.angle)*self.yMargin),
-                    round(cp[1]+self.connection.xSize*math.cos(self.connection.angle)*self.xMargin
-                    +self.connection.ySize*math.sin(self.connection.angle)*self.yMargin))
+        self.pos = self.connection.definePos(self.xMargin, self.yMargin)
         cv2.circle(img, self.pos, 10, (255, 255, 0), 3)
         cv2.line(img, self.pos, (round(self.pos[0]+self.dist*math.cos(totalAngle)),
                                  round(self.pos[1]-self.dist*math.sin(totalAngle))),

@@ -1,14 +1,15 @@
 import math
-from .veichle import *
+from .Vehicle import *
 
 class Motor:
-    def __init__(self, num):
-        self.connection = None
+    def __init__(self, num, connection):
+        self.connection = connection
         self.num = num
         self.dict = {1: 2, 2: 1}
         self.speed = 0
         self.posMult = 0.75
         self.maxSpeed = 0.01
+
     def move(self):
         #Just move and make rotation things
         otherMotor = self.connection.tirePos()[self.dict[self.num]-1]
@@ -18,6 +19,7 @@ class Motor:
         else:
             rotateArround(otherMotor, self.connection.pos, -self.speed)
             self.connection.angle += self.speed
+
     def set(self, speed):
         if speed > self.maxSpeed:
             self.speed = self.maxSpeed
@@ -25,7 +27,9 @@ class Motor:
             self.speed = -self.maxSpeed
         else:
             self.speed = speed
-    def draw(self, img, v=None):
+
+    def draw(self, img):
+        v = self.connection
         tire1, tire2 = v.tirePos(self.posMult)
         cv2.circle(img, tire1, 10, (255, 0, 0), 2) # (imageToDraw, locationOfCircle, radiusOfCircle, ThicknessOfCircle)
         cv2.circle(img, tire2, 10, (255, 0, 0), 2)
