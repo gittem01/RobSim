@@ -1,4 +1,4 @@
-from src.motor import *
+from src.Motor import *
 from src.Vehicle import *
 from src.bwSensor import *
 from src.distSensor import *
@@ -16,12 +16,12 @@ class Sim:
         self.img = self.baseImg.copy()
         self.gridList = np.moveaxis(np.mgrid[:size[1],:size[0]], 0, -1)
         self.objects = []
-        cv2.namedWindow(name)
-        cv2.setMouseCallback(name, self.event_func)
         self.isDrawingLine = False
         self.isDrawingWall = False
         self.lineDots = []
         self.wallDots = []
+        cv2.namedWindow(name)
+        cv2.setMouseCallback(name, self.event_func)
 
     def loop(self):
         self.img = self.baseImg.copy()
