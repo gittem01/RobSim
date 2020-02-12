@@ -12,5 +12,5 @@
  - 's' Moves backward
  - 'c' Clears screen
  - Left click for drawing lines
- - Middle click for drawing walls
- - Right click adds candle
+ - Right click for drawing walls
+ - Middle click adds candle
