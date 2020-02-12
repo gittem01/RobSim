@@ -1,12 +1,5 @@
-from src.Motor import *
-from src.Vehicle import *
-from src.bwSensor import *
-from src.distSensor import *
-from src.candle import *
-from src.heatSensor import *
-from src.keyControls import control
-import random
-import time
+import cv2
+import numpy as np
 
 class Sim:
     def __init__(self, name, size):

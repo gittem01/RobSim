@@ -1,20 +1,6 @@
+from .Funcs import *
 import cv2
-import numpy as np
 import math
-
-def rotateArround(p1, p2, angle):
-    s = math.sin(angle)
-    c = math.cos(angle)
-
-    p2[0] -= p1[0]
-    p2[1] -= p1[1]
-
-    xnew = p2[0] * c - p2[1] * s
-    ynew = p2[0] * s + p2[1] * c
-
-    p2[0] = xnew + p1[0]
-    p2[1] = ynew + p1[1]
-    return p2
 
 class Vehicle:
     def __init__(self, pos, xSize, ySize, motor1=None, motor2=None, color=(0, 255, 0)):

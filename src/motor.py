@@ -1,5 +1,6 @@
+from .Funcs import *
 import math
-from .Vehicle import *
+import cv2
 
 class Motor:
     def __init__(self, num, connection):

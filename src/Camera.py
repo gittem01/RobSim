@@ -5,8 +5,8 @@ import numpy as np
 import cv2
 
 class Camera:
-    def __init__(self, connection, sim, viewSize, height=25, pos=np.array([0, 0, 0], np.float64),
-                angle=np.array([0, 0, 0], np.float64), e=np.array([0, 0, 400], np.float64)):
+    def __init__(self, connection, sim, viewSize, height=50, pos=np.array([0, 0, 0], np.float64),
+                angle=np.array([0, 0, 0], np.float64), e=np.array([0, 0, -300], np.float64)):
         self.connection = connection
         self.sim = sim
         self.viewSize = viewSize
@@ -29,7 +29,6 @@ class Camera:
         self.yMargin = 0
         self.img = np.zeros((self.viewSize))
         self.name = "Camera"
-        cv2.namedWindow(self.name)
         self.seenDots = []
 
     def update(self):
@@ -62,23 +61,31 @@ class Camera:
                     continue
                 b[0] += int(self.viewSize[1]/2)
                 b[1] += (self.viewSize[0]/2)
-                b[0] = self.viewSize[1] - b[0]
-                b[1] = self.viewSize[0] - b[1]
                 self.seenDots[-1].append(b)
+                """
                 if b[0]<self.viewSize[1] and b[0]>=0 and b[1]<self.viewSize[0] and b[1]>=0:
-                    self.img[int(b[1]), int(b[0])] = 1
-
+                    self.img[int(b[1]), int(b[0])] = 1 # if dots are necessary
+                """
         for line in self.seenDots:
             if len(line) < 2:
                 continue
             for i in range(len(line)-1):
                 try:
                     cv2.line(self.img, (int(line[i][0]), int(line[i][1])),
-                                       (int(line[i+1][0]), int(line[i+1][1])), 1, 3)
+                                       (int(line[i+1][0]), int(line[i+1][1])), 1, 2)
                 except:
                     continue
-        #cv2.waitKey(1) # No need since sim has this waitKey
+
         cv2.circle(img, (int(self.pos[0]), int(self.pos[2])), 5, (0, 255, 255), 2)
+
+        cv2.line(img, (int(self.pos[0]), int(self.pos[2])),
+                                (int(self.pos[0]+50*cos(self.angle[1]-pi/4)),
+                                 int(self.pos[2]-50*sin(self.angle[1]-pi/4))),
+                                 (0, 0, 255))
+        cv2.line(img, (int(self.pos[0]), int(self.pos[2])),
+                                (int(self.pos[0]+50*cos(self.angle[1]-3*pi/4)),
+                                 int(self.pos[2]-50*sin(self.angle[1]-3*pi/4))),
+                                 (0, 0, 255))
         cv2.imshow(self.name, self.img)
 
     def put(self, point):
