@@ -6,7 +6,7 @@ import cv2
 
 class Camera:
     def __init__(self, connection, sim, viewSize, height=50, pos=np.array([0, 0, 0], np.float64),
-                angle=np.array([0, 0, 0], np.float64), e=np.array([0, 0, -300], np.float64)):
+                angle=np.array([1, 0, 0], np.float64), e=np.array([0, 0, -300], np.float64)):
         self.connection = connection
         self.sim = sim
         self.viewSize = viewSize
@@ -26,7 +26,7 @@ class Camera:
                            [-sin(self.angle[2]), cos(self.angle[2]), 0],
                            [0, 0, 1]])
         self.xMargin = 0.5
-        self.yMargin = 0
+        self.yMargin = 0.2
         self.img = np.zeros((self.viewSize))
         self.name = "Camera"
         self.seenDots = []
@@ -87,7 +87,7 @@ class Camera:
                                  int(self.pos[2]-50*sin(self.angle[1]-3*pi/4))),
                                  (0, 0, 255))
         cv2.imshow(self.name, self.img)
-
+        
     def put(self, point):
 
         array4 = point-self.pos

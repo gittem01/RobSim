@@ -14,3 +14,6 @@
  - Left click for drawing lines
  - Right click for drawing walls
  - Middle click adds candle
+
+ ![](gifs/gif1.gif)
+ ![](gifs/gif2.gif)
