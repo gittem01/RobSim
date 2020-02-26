@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from .candle import *
 
 class Sim:
     def __init__(self, name, size):

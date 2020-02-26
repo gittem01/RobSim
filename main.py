@@ -22,7 +22,7 @@ s.objects.append(motora)
 s.objects.append(motorb)
 s.objects.append(c)
 
-addDots(s, 50) # Adds circle road into the simulation
+addDots(s, 150) # Adds circle road into the simulation
 while 1:
     out = s.loop() # loop returns the key that is pressed on
     control(out, v) # Controls vehicles motors with WASD
